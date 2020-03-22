@@ -1,4 +1,5 @@
 run();
+
 // The entire app is in a function just to make sure we don't polute the global namespace
 function run() {
   const rootEl = getElementByIdOrThrow('root');
