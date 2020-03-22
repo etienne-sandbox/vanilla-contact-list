@@ -9,7 +9,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "parcel src/index.html"
+    "start": "parcel src/index.html",
+    "build": "tsc ./src/index.ts --target esnext"
   },
   "repository": {
     "type": "git",
