@@ -6,9 +6,11 @@ interface Contact {
   email: string | null;
 }
 
+// The entire app is in a function just to make sure we don't polute the global namespace
 function run() {
   const rootEl = getElementByIdOrThrow('root');
 
+  // The list of contacts
   let contacts: Array<Contact> = [
     {
       id: 'p9n51g',
@@ -27,11 +29,15 @@ function run() {
     }
   ];
 
+  // Call createApp to initialize the App
+  // and get the contactsEl used for updates
   const { contactsEl } = createApp();
 
-  // initial render
+  // Make sure the App is updated at when stating
   renderApp();
 
+  // This function create the HTML structure
+  // and add it to the root element in the DOM
   function createApp() {
     const titleEl = createElement('h1', { children: 'Contacts', className: 'title' });
     const contactsEl = createElement('div', { className: 'contacts' });
@@ -46,6 +52,7 @@ function run() {
     };
   }
 
+  // Create the add form structure
   function createAddForm() {
     const inputNameEl: HTMLInputElement = createElement('input') as any;
     inputNameEl.placeholder = 'name';
@@ -56,14 +63,18 @@ function run() {
     });
     addButtonEl.addEventListener('click', () => {
       if (inputNameEl.value.length === 0) {
+        // no name, return to stop the function
         return;
       }
+      // add a contact
       contacts.push({
         id: randomShortId(),
         name: inputNameEl.value,
         email: inputEmailEl.value.length > 0 ? inputEmailEl.value : null
       });
+      // then update the app
       renderApp();
+      // and clear the inputs
       inputNameEl.value = '';
       inputEmailEl.value = '';
     });
@@ -74,19 +85,25 @@ function run() {
     return { addFormEl };
   }
 
+  // This function is used to update the App, mainly the list of contacts
   function renderApp() {
     renderContacts();
   }
 
+  // This function update the list of contacts
   function renderContacts() {
+    // clear the content of the container first
     contactsEl.innerHTML = '';
+    // the create new elements
     const contactItemEls = contacts.map(contact => {
       const deleteEl = createElement('button', {
         className: 'remove',
         children: 'Delete'
       });
       deleteEl.addEventListener('click', () => {
+        // remove the contact
         contacts = contacts.filter(c => c.id !== contact.id);
+        // and update the app
         renderApp();
       });
       return createElement('div', {
@@ -103,6 +120,7 @@ function run() {
         ]
       });
     });
+    // and add them to the container
     contactItemEls.forEach(elem => {
       contactsEl.appendChild(elem);
     });
@@ -120,6 +138,9 @@ interface ElementsProps {
   children?: Children;
 }
 
+/**
+ * This function let you create an HTML element and add attributes and children
+ */
 function createElement(type: ElementType, props: ElementsProps = {}): HTMLElement {
   const elem = document.createElement(type);
   if (props.className) {
@@ -143,6 +164,10 @@ function createElement(type: ElementType, props: ElementsProps = {}): HTMLElemen
   return elem;
 }
 
+/**
+ * Like document.getElementById but throw an error
+ * if the element does not exist
+ */
 function getElementByIdOrThrow(id: string): HTMLElement {
   const elem = document.getElementById(id);
   if (!elem) {
