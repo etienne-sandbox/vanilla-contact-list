@@ -1,0 +1,167 @@
+html {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Proza Libre', sans-serif;
+  background-color: #4c4177;
+  background-image: linear-gradient(315deg, #4c4177 0%, #2a5470 74%);
+  font-size: 18px;
+  overflow: hidden;
+  height: 100%;
+  line-height: 1.2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  font-family: 'Proza Libre', sans-serif;
+  font-size: 1rem;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.app {
+  position: relative;
+  text-align: center;
+  margin: 1rem;
+  background: white;
+  border-radius: 2.2rem;
+  padding: 1rem;
+  max-width: 18rem;
+  min-height: 15rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02), 0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+    0 12.5px 10px rgba(0, 0, 0, 0.035), 0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.05), 0 100px 80px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+.title {
+  color: #1a237e;
+  margin: 0;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-self: stretch;
+  padding-bottom: 0.5rem;
+  overflow-y: auto;
+}
+
+.contact {
+  position: relative;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.contact:nth-child(odd) {
+  background: #eeeeee;
+}
+
+.infos {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.remove {
+  position: absolute;
+  border: none;
+  background: #ef5350;
+  border-radius: 10rem;
+  color: white;
+  padding: 0.2rem 0.8rem;
+  padding-top: 0.3rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition-duration: 0.3s;
+  cursor: pointer;
+  right: 1rem;
+}
+.contact:hover .remove {
+  opacity: 1;
+}
+
+.contact h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #424242;
+  font-weight: 500;
+}
+.contact p {
+  margin: 0;
+  color: #616161;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+}
+
+.add {
+  display: flex;
+  flex-direction: row;
+  border: none;
+  border-radius: 10rem;
+  color: white;
+  align-self: stretch;
+  align-items: stretch;
+  justify-content: flex-start;
+  background-color: #e0e0e0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 0.1rem;
+  outline: none;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+.add input {
+  width: 50%;
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 1rem;
+  padding: 0.3rem 1rem;
+}
+.add input::placeholder {
+  color: #546e7a;
+}
+
+.add button {
+  border: none;
+  background: #3949ab;
+  border-radius: 10rem;
+  color: white;
+  padding: 0.3rem 1rem;
+  padding-top: 0.4rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
