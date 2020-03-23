@@ -145,6 +145,8 @@ body {
 }
 .add input {
   width: 50%;
+  max-width: 50%;
+  min-width: 10%;
   flex: 1;
   border: none;
   background: none;
