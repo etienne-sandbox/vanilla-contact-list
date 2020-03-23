@@ -8,7 +8,7 @@ interface Contact {
 
 // The entire app is in a function just to make sure we don't polute the global namespace
 function run() {
-  const rootEl = getElementByIdOrThrow('root');
+  const rootEl: HTMLElement = getElementByIdOrThrow('root');
 
   // The list of contacts
   let contacts: Array<Contact> = [
@@ -38,7 +38,7 @@ function run() {
 
   // This function create the HTML structure
   // and add it to the root element in the DOM
-  function createApp() {
+  function createApp(): { contactsEl: HTMLElement } {
     const titleEl = createElement('h1', { children: 'Contacts', className: 'title' });
     const contactsEl = createElement('div', { className: 'contacts' });
     const { addFormEl } = createAddForm();
@@ -53,7 +53,7 @@ function run() {
   }
 
   // Create the add form structure
-  function createAddForm() {
+  function createAddForm(): { addFormEl: HTMLElement } {
     const inputNameEl: HTMLInputElement = createElement('input') as any;
     inputNameEl.placeholder = 'name';
     const inputEmailEl: HTMLInputElement = createElement('input') as any;
@@ -86,42 +86,44 @@ function run() {
   }
 
   // This function is used to update the App, mainly the list of contacts
-  function renderApp() {
+  function renderApp(): void {
     renderContacts();
   }
 
   // This function update the list of contacts
-  function renderContacts() {
+  function renderContacts(): void {
     // clear the content of the container first
     contactsEl.innerHTML = '';
     // the create new elements
-    const contactItemEls = contacts.map(contact => {
-      const deleteEl = createElement('button', {
-        className: 'remove',
-        children: 'Delete'
-      });
-      deleteEl.addEventListener('click', () => {
-        // remove the contact
-        contacts = contacts.filter(c => c.id !== contact.id);
-        // and update the app
-        renderApp();
-      });
-      return createElement('div', {
-        className: 'contact',
-        children: [
-          createElement('div', {
-            className: 'infos',
-            children: [
-              createElement('h2', { children: contact.name }),
-              contact.email === null ? null : createElement('p', { children: contact.email })
-            ]
-          }),
-          deleteEl
-        ]
-      });
-    });
+    const contactItemEls: HTMLElement[] = contacts.map(
+      (contact): HTMLElement => {
+        const deleteEl = createElement('button', {
+          className: 'remove',
+          children: 'Delete'
+        });
+        deleteEl.addEventListener('click', (): void => {
+          // remove the contact
+          contacts = contacts.filter(c => c.id !== contact.id);
+          // and update the app
+          renderApp();
+        });
+        return createElement('div', {
+          className: 'contact',
+          children: [
+            createElement('div', {
+              className: 'infos',
+              children: [
+                createElement('h2', { children: contact.name }),
+                contact.email === null ? null : createElement('p', { children: contact.email })
+              ]
+            }),
+            deleteEl
+          ]
+        });
+      }
+    );
     // and add them to the container
-    contactItemEls.forEach(elem => {
+    contactItemEls.forEach((elem): void => {
       contactsEl.appendChild(elem);
     });
   }
@@ -142,7 +144,7 @@ interface ElementsProps {
  * This function let you create an HTML element and add attributes and children
  */
 function createElement(type: ElementType, props: ElementsProps = {}): HTMLElement {
-  const elem = document.createElement(type);
+  const elem: HTMLElement = document.createElement(type);
   if (props.className) {
     elem.className = props.className;
   }
@@ -169,7 +171,7 @@ function createElement(type: ElementType, props: ElementsProps = {}): HTMLElemen
  * if the element does not exist
  */
 function getElementByIdOrThrow(id: string): HTMLElement {
-  const elem = document.getElementById(id);
+  const elem: HTMLElement | null = document.getElementById(id);
   if (!elem) {
     throw new Error(`Cannot find element with id "${id}"`);
   }
