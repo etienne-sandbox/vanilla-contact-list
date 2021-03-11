@@ -8,25 +8,25 @@ interface Contact {
 
 // The entire app is in a function just to make sure we don't polute the global namespace
 function run() {
-  const rootEl: HTMLElement = getElementByIdOrThrow('root');
+  const rootEl: HTMLElement = getElementByIdOrThrow("root");
 
   // The list of contacts
   let contacts: Array<Contact> = [
     {
-      id: 'p9n51g',
-      name: 'Alice',
-      email: null
+      id: "p9n51g",
+      name: "Alice",
+      email: null,
     },
     {
-      id: '8mopn7',
-      name: 'Bob',
-      email: 'bob@gmail.com'
+      id: "8mopn7",
+      name: "Bob",
+      email: "bob@gmail.com",
     },
     {
-      id: 'u7oo0d',
-      name: 'Paul',
-      email: 'paul@gmail.com'
-    }
+      id: "u7oo0d",
+      name: "Paul",
+      email: "paul@gmail.com",
+    },
   ];
 
   // Call createApp to initialize the App
@@ -39,29 +39,32 @@ function run() {
   // This function create the HTML structure
   // and add it to the root element in the DOM
   function createApp(): { contactsEl: HTMLElement } {
-    const titleEl = createElement('h1', { children: 'Contacts', className: 'title' });
-    const contactsEl = createElement('div', { className: 'contacts' });
+    const titleEl = createElement("h1", {
+      children: "Contacts",
+      className: "title",
+    });
+    const contactsEl = createElement("div", { className: "contacts" });
     const { addFormEl } = createAddForm();
-    const appEl = createElement('div', {
-      className: 'app',
-      children: [titleEl, contactsEl, addFormEl]
+    const appEl = createElement("div", {
+      className: "app",
+      children: [titleEl, contactsEl, addFormEl],
     });
     rootEl.appendChild(appEl);
     return {
-      contactsEl
+      contactsEl,
     };
   }
 
   // Create the add form structure
   function createAddForm(): { addFormEl: HTMLElement } {
-    const inputNameEl: HTMLInputElement = createElement('input') as any;
-    inputNameEl.placeholder = 'name';
-    const inputEmailEl: HTMLInputElement = createElement('input') as any;
-    inputEmailEl.placeholder = 'email';
-    const addButtonEl = createElement('button', {
-      children: 'Add'
+    const inputNameEl = createElement("input") as HTMLInputElement;
+    inputNameEl.placeholder = "name";
+    const inputEmailEl = createElement("input") as HTMLInputElement;
+    inputEmailEl.placeholder = "email";
+    const addButtonEl = createElement("button", {
+      children: "Add",
     });
-    addButtonEl.addEventListener('click', () => {
+    addButtonEl.addEventListener("click", () => {
       if (inputNameEl.value.length === 0) {
         // no name, return to stop the function
         return;
@@ -70,17 +73,17 @@ function run() {
       contacts.push({
         id: randomShortId(),
         name: inputNameEl.value,
-        email: inputEmailEl.value.length > 0 ? inputEmailEl.value : null
+        email: inputEmailEl.value.length > 0 ? inputEmailEl.value : null,
       });
       // then update the app
       renderApp();
       // and clear the inputs
-      inputNameEl.value = '';
-      inputEmailEl.value = '';
+      inputNameEl.value = "";
+      inputEmailEl.value = "";
     });
-    const addFormEl = createElement('div', {
-      className: 'add',
-      children: [inputNameEl, inputEmailEl, addButtonEl]
+    const addFormEl = createElement("div", {
+      className: "add",
+      children: [inputNameEl, inputEmailEl, addButtonEl],
     });
     return { addFormEl };
   }
@@ -93,32 +96,34 @@ function run() {
   // This function update the list of contacts
   function renderContacts(): void {
     // clear the content of the container first
-    contactsEl.innerHTML = '';
+    contactsEl.innerHTML = "";
     // the create new elements
     const contactItemEls: HTMLElement[] = contacts.map(
       (contact): HTMLElement => {
-        const deleteEl = createElement('button', {
-          className: 'remove',
-          children: 'Delete'
+        const deleteEl = createElement("button", {
+          className: "remove",
+          children: "Delete",
         });
-        deleteEl.addEventListener('click', (): void => {
+        deleteEl.addEventListener("click", (): void => {
           // remove the contact
-          contacts = contacts.filter(c => c.id !== contact.id);
+          contacts = contacts.filter((c) => c.id !== contact.id);
           // and update the app
           renderApp();
         });
-        return createElement('div', {
-          className: 'contact',
+        return createElement("div", {
+          className: "contact",
           children: [
-            createElement('div', {
-              className: 'infos',
+            createElement("div", {
+              className: "infos",
               children: [
-                createElement('h2', { children: contact.name }),
-                contact.email === null ? null : createElement('p', { children: contact.email })
-              ]
+                createElement("h2", { children: contact.name }),
+                contact.email === null
+                  ? null
+                  : createElement("p", { children: contact.email }),
+              ],
             }),
-            deleteEl
-          ]
+            deleteEl,
+          ],
         });
       }
     );
@@ -129,11 +134,11 @@ function run() {
   }
 }
 
-type ElementType = 'div' | 'h1' | 'h2' | 'h3' | 'button' | 'p' | 'input';
+type ElementType = "div" | "h1" | "h2" | "h3" | "button" | "p" | "input";
 
 type ChildrenItem = string | HTMLElement | null;
 
-type Children = ChildrenItem | Array<ChildrenItem>;
+type Children = ChildrenItem | ChildrenItem[];
 
 interface ElementsProps {
   className?: string;
@@ -143,21 +148,26 @@ interface ElementsProps {
 /**
  * This function let you create an HTML element and add attributes and children
  */
-function createElement(type: ElementType, props: ElementsProps = {}): HTMLElement {
+function createElement(
+  type: ElementType,
+  props: ElementsProps = {}
+): HTMLElement {
   const elem: HTMLElement = document.createElement(type);
   if (props.className) {
     elem.className = props.className;
   }
   if (props.children) {
-    const childrenArray = Array.isArray(props.children) ? props.children : [props.children];
+    const childrenArray = Array.isArray(props.children)
+      ? props.children
+      : [props.children];
     childrenArray
-      .map(children => {
-        if (typeof children === 'string') {
+      .map((children) => {
+        if (typeof children === "string") {
           return document.createTextNode(children);
         }
         return children;
       })
-      .map(item => {
+      .map((item) => {
         if (item) {
           elem.appendChild(item);
         }
@@ -182,7 +192,5 @@ function getElementByIdOrThrow(id: string): HTMLElement {
  * Return a short (5 chars) string ID
  */
 function randomShortId(): string {
-  return Math.random()
-    .toString(36)
-    .substring(7);
+  return Math.random().toString(36).substring(7);
 }
