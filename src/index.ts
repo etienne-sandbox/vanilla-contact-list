@@ -11,7 +11,7 @@ function run() {
   const rootEl: HTMLElement = getElementByIdOrThrow("root");
 
   // The list of contacts
-  let contacts: Array<Contact> = [
+  let contacts: Contact[] = [
     {
       id: "p9n51g",
       name: "Alice",
